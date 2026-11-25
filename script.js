@@ -258,7 +258,8 @@
     secs.forEach((s, i) => { if (!s) return; const t = s.getBoundingClientRect().top; if (t < innerHeight * 0.4 && t > best) { best = t; cur = i; } });
     links.forEach((a, i) => a.classList.toggle('active', i === cur));
   }
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  let tick = false;
+  addEventListener('scroll', () => { if (tick) return; tick = true; requestAnimationFrame(() => { onScroll(); tick = false; }); }, { passive: true }); onScroll();
 
   /* ---------- SCROLL REVEAL ---------- */
   const io = new IntersectionObserver(es => es.forEach(en => {

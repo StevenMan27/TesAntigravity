@@ -9,18 +9,20 @@
 
   /* ---------- Floating decoration shapes (CSS-animated, cheap) ---------- */
   if (!reduce) {
-    const kinds = ['sq', 'ci', 'tri', 'plus'];
-    [['about', 3], ['skills', 3], ['projects', 3], ['research', 3], ['faq', 3], ['contact', 3]].forEach(([id, n], si) => {
+    const kinds = ['sq', 'ci', 'plus'];
+    [['about', 2], ['skills', 2], ['projects', 2], ['research', 2], ['faq', 2], ['contact', 2]].forEach(([id, n], si) => {
       const sec = $('#' + id); if (!sec) return;
       for (let i = 0; i < n; i++) {
         const d = document.createElement('div'); const c = colors[(si + i * 2) % colors.length];
-        d.className = 'deco ' + kinds[(si + i) % 4]; d.style.setProperty('--c', c); d.style.background = c;
+        d.className = 'deco ' + kinds[(si + i) % 3]; d.style.setProperty('--c', c); d.style.background = c;
         d.style.top = (8 + ((i * 37 + si * 13) % 78)) + '%';
         d.style[i % 2 ? 'left' : 'right'] = (1 + (i * 3 + si) % 4) + '%';
         d.style.animationDelay = (-i * 1.7) + 's';
         sec.appendChild(d);
       }
     });
+    const dio = new IntersectionObserver(es => es.forEach(e => e.target.querySelectorAll('.deco').forEach(d => d.classList.toggle('run', e.isIntersecting))));
+    $$('section').forEach(sec => { if (sec.querySelector('.deco')) dio.observe(sec); });
   }
 
   /* ---------- Spinning badge in hero ---------- */
@@ -67,79 +69,88 @@
     });
   }
 
-  /* ---------- Hero 3D: toon shading + thick outlines ---------- */
-  const canvas = $('#hero3d');
-  if (!canvas || typeof THREE === 'undefined' || !hasG) return;
+  /* ---------- 3D: interactive Rubik's cube inside the OS window ---------- */
+  const holder = $('.os-art');
+  if (!holder || typeof THREE === 'undefined') return;
+  const cv = document.createElement('canvas'); cv.id = 'cube3d'; cv.setAttribute('aria-label', 'Kubus 3D interaktif, klik untuk memutar');
   let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' }); } catch { return; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  try { renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); } catch { return; }
+  holder.appendChild(cv); holder.classList.add('has3d');
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(40, 1, .1, 100); camera.position.z = 21;
-  scene.add(new THREE.AmbientLight(0xffffff, .75));
-  const dl = new THREE.DirectionalLight(0xffffff, 1.2); dl.position.set(4, 6, 8); scene.add(dl);
+  const camera = new THREE.PerspectiveCamera(34, 1, .1, 100); camera.position.set(0, 1.6, 17); camera.lookAt(0, -.2, 0);
 
-  const ramp = new THREE.DataTexture(new Uint8Array([110, 190, 255]), 3, 1, THREE.RedFormat);
-  ramp.minFilter = ramp.magFilter = THREE.NearestFilter; ramp.needsUpdate = true;
+  const faceCols = [0xFF5E5E, 0xC084FC, 0xFFE600, 0x4ADE80, 0x3B82F6, 0xFFFFFF]; // +x -x +y -y +z -z
+  const mats = faceCols.map(c => new THREE.MeshBasicMaterial({ color: c }));
+  const black = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  const coreG = new THREE.BoxGeometry(1, 1, 1), stG = new THREE.PlaneGeometry(.8, .8);
+  const dirs = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
+  const cube = new THREE.Group(); scene.add(cube);
+  const cubelets = [], cores = [];
+  for (let x = -1; x <= 1; x++) for (let y = -1; y <= 1; y++) for (let z = -1; z <= 1; z++) {
+    const g = new THREE.Group(); g.position.set(x, y, z);
+    const core = new THREE.Mesh(coreG, black); g.add(core); cores.push(core);
+    dirs.forEach((d, k) => {
+      if (d[0] * x + d[1] * y + d[2] * z !== 1) return;
+      const st = new THREE.Mesh(stG, mats[k]); st.position.set(d[0] * .501, d[1] * .501, d[2] * .501);
+      st.rotation.set(d[1] ? -d[1] * Math.PI / 2 : 0, d[0] ? d[0] * Math.PI / 2 : (d[2] < 0 ? Math.PI : 0), 0); g.add(st);
+    });
+    cube.add(g); cubelets.push(g);
+  }
+  cube.scale.setScalar(1.55);
 
-  const C = n => parseInt(colors[n].slice(1), 16);
-  const defs = [
-    { g: new THREE.BoxGeometry(1.7, 1.7, 1.7), c: 0, fx: .30, fy: .20, s: 1.15 },
-    { g: new THREE.TorusGeometry(.9, .38, 14, 28), c: 1, fx: .43, fy: -.12, s: 1.2 },
-    { g: new THREE.IcosahedronGeometry(1, 0), c: 3, fx: .17, fy: -.30, s: 1.0 },
-    { g: new THREE.OctahedronGeometry(1.1), c: 2, fx: .05, fy: .36, s: .9 },
-    { g: new THREE.ConeGeometry(.9, 1.7, 4), c: 4, fx: .46, fy: .38, s: .8 },
-    { g: new THREE.BoxGeometry(2.4, .6, .6), c: 1, fx: -.40, fy: -.38, s: .8 },
-    { g: new THREE.TorusKnotGeometry(.6, .22, 70, 10), c: 3, fx: -.14, fy: .40, s: .8 }
-  ];
-  const small = innerWidth < 720;
-  const list = small ? defs.slice(0, 4) : defs;
-  const group = new THREE.Group(); scene.add(group);
-  const meshes = list.map((d, i) => {
-    const m = new THREE.Mesh(d.g, new THREE.MeshToonMaterial({ color: C(d.c), gradientMap: ramp }));
-    const o = new THREE.Mesh(d.g, new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide }));
-    o.scale.setScalar(1.07); m.add(o);
-    m.userData = { d, base: d.s * (small ? .7 : 1), spin: .006 + i * .0012, ph: i * 1.3, boost: 0, sc: 0 };
-    m.rotation.set(Math.random() * 3, Math.random() * 3, 0);
-    group.add(m); return m;
+  // hard shadow disc
+  const shadow = new THREE.Mesh(new THREE.CircleGeometry(3, 32), new THREE.MeshBasicMaterial({ color: 0x000000 }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = -3.9; shadow.scale.set(.8, .8, .3); scene.add(shadow);
+
+  // orbiting voxels
+  const orb = [];
+  const hullM = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide }), vg = new THREE.BoxGeometry(.7, .7, .7);
+  [0xFFE600, 0xFF5E5E, 0x3B82F6, 0x4ADE80, 0xC084FC, 0xFFFFFF].forEach((c, i) => {
+    const m = new THREE.Mesh(vg, new THREE.MeshBasicMaterial({ color: c })); const h = new THREE.Mesh(vg, hullM); h.scale.setScalar(1.18); m.add(h);
+    m.userData = { a: i / 6 * Math.PI * 2, r: 5.4 + (i % 2) * .7, sp: .5 + i * .08, y: (i % 3 - 1) * 1.6 }; scene.add(m); orb.push(m);
   });
 
-  function layout() {
-    const r = canvas.parentElement.getBoundingClientRect();
-    renderer.setSize(r.width, r.height, false);
-    camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
-    const h = 2 * Math.tan(camera.fov * Math.PI / 360) * camera.position.z, w = h * camera.aspect;
-    meshes.forEach(m => { m.userData.x0 = m.userData.d.fx * w; m.userData.y0 = m.userData.d.fy * h; m.position.z = -1; });
-  }
-  layout(); addEventListener('resize', layout);
+  function size() { const r = holder.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width / r.height; camera.updateProjectionMatrix(); }
+  size(); new ResizeObserver(size).observe(holder);
 
-  const mouse = { x: 0, y: 0, nx: 0, ny: 0 };
-  addEventListener('mousemove', e => {
-    mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5;
-    const r = canvas.getBoundingClientRect(); mouse.nx = ((e.clientX - r.left) / r.width) * 2 - 1; mouse.ny = -((e.clientY - r.top) / r.height) * 2 + 1;
-  }, { passive: true });
+  /* twist a random layer */
+  let busy = false;
+  function twist() {
+    if (busy) return; busy = true;
+    const axis = ['x', 'y', 'z'][(Math.random() * 3) | 0], layer = ((Math.random() * 3) | 0) - 1, dir = Math.random() < .5 ? 1 : -1;
+    const pivot = new THREE.Group(); cube.add(pivot);
+    cubelets.filter(c => Math.round(c.position[axis]) === layer).forEach(c => pivot.attach(c));
+    const end = () => { [...pivot.children].forEach(c => { cube.attach(c); c.position.set(Math.round(c.position.x), Math.round(c.position.y), Math.round(c.position.z)); }); cube.remove(pivot); busy = false; };
+    if (hasG) gsap.to(pivot.rotation, { [axis]: dir * Math.PI / 2, duration: .55, ease: 'power3.inOut', onComplete: end }); else { pivot.rotation[axis] = dir * Math.PI / 2; end(); }
+  }
+
+  const mouse = { x: 0, y: 0, nx: 9, ny: 9, over: false };
+  cv.addEventListener('mousemove', e => { const r = cv.getBoundingClientRect(); mouse.nx = ((e.clientX - r.left) / r.width) * 2 - 1; mouse.ny = -((e.clientY - r.top) / r.height) * 2 + 1; mouse.over = true; });
+  cv.addEventListener('mouseleave', () => { mouse.over = false; mouse.nx = mouse.ny = 9; });
+  addEventListener('mousemove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; }, { passive: true });
+  cv.addEventListener('click', () => { twist(); setTimeout(twist, 650); if (hasG) gsap.fromTo(cube.scale, { x: 1.3, y: 1.8, z: 1.3 }, { x: 1.55, y: 1.55, z: 1.55, duration: .6, ease: 'elastic.out(1,.4)' }); });
   const ray = new THREE.Raycaster();
 
-  let visible = true;
-  new IntersectionObserver(es => visible = es[0].isIntersecting).observe(canvas.parentElement);
-  meshes.forEach((m, i) => { m.userData.sc = 0; gsap.to(m.userData, { sc: 1, duration: 1.2, delay: 1.7 + i * .12, ease: 'elastic.out(1,.55)' }); });
+  let on = true, running = false, spin = 0, clock = 0;
+  new IntersectionObserver(es => { on = es[0].isIntersecting; if (on && !running) loop(); }).observe(holder);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && on && !running) loop(); });
+  setInterval(() => { if (on && !document.hidden && !mouse.over) twist(); }, 2600);
+  if (hasG) gsap.from(cube.scale, { x: 0, y: 0, z: 0, duration: 1.2, delay: 1.5, ease: 'elastic.out(1,.55)' });
 
-  let last = scrollY;
-  gsap.ticker.add(t => {
-    if (!visible || document.hidden) return;
-    const v = Math.min(Math.abs(scrollY - last), 60); last = scrollY;
+  function loop() {
+    if (!on || document.hidden) { running = false; return; }
+    running = true; clock += .016;
     ray.setFromCamera({ x: mouse.nx, y: mouse.ny }, camera);
-    const hit = fine ? ray.intersectObjects(meshes, false)[0] : null;
-    meshes.forEach(m => {
-      const u = m.userData, hov = hit && hit.object === m;
-      u.boost += ((hov ? .35 : 0) - u.boost) * .08;
-      m.rotation.x += u.spin + u.boost + v * .002; m.rotation.y += u.spin * 1.5 + u.boost + v * .003;
-      m.position.x = u.x0 + Math.sin(t * .8 + u.ph) * .25;
-      m.position.y = u.y0 + Math.sin(t + u.ph) * .45;
-      const target = u.base * u.sc * (hov ? 1.3 : 1); m.scale.x += (target - m.scale.x) * .15; m.scale.y = m.scale.z = m.scale.x;
-    });
-    group.rotation.y += (mouse.x * .5 - group.rotation.y) * .05;
-    group.rotation.x += (mouse.y * .35 - group.rotation.x) * .05;
-    group.position.y = scrollY * .006;
+    const hov = mouse.over && ray.intersectObjects(cores, false).length > 0;
+    cv.style.cursor = hov ? 'pointer' : 'grab';
+    spin += (hov ? .03 : .008);
+    cube.rotation.y = spin + mouse.x * .8; cube.rotation.x = .45 + mouse.y * .5;
+    cube.position.y = Math.sin(clock * 2) * .25;
+    const s = 1 - (Math.sin(clock * 2) * .5 + .5) * .06; shadow.scale.x = .8 * s; shadow.scale.y = .8 * s;
+    orb.forEach(m => { const u = m.userData; u.a += u.sp * .016; m.position.set(Math.cos(u.a) * u.r, u.y + Math.sin(clock * 2 + u.a) * .4, Math.sin(u.a) * u.r * .5); m.rotation.x += .02; m.rotation.y += .03; });
     renderer.render(scene, camera);
-  });
+    requestAnimationFrame(loop);
+  }
+  loop();
 })();

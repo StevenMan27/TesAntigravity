@@ -377,3 +377,18 @@ section > .container { position: relative; z-index: 1; }
 
 .foot-letters span { display: inline-block; cursor: default; }
 .proj, .skill { will-change: transform; }
+
+/* ================= PERF + CUBE (v4) ================= */
+.marquee-track { animation: scroll 30s linear infinite !important; will-change: auto; }
+.marquee2-track { animation: scroll 26s linear infinite reverse; }
+#hero3d, .sticker { will-change: auto; }
+.proj, .skill { will-change: auto !important; }
+.deco { will-change: auto; animation-play-state: paused; }
+.deco.run { animation-play-state: running; }
+.deco.tri { display: none; }
+.sec-num { opacity: .1; }
+.os-art { position: relative; aspect-ratio: 16 / 11; background-color: var(--bg); background-image: radial-gradient(#000 1px, transparent 1px); background-size: 16px 16px; overflow: hidden; }
+.os-art svg { width: 100%; height: 100%; }
+.os-art.has3d svg { display: none; }
+#cube3d { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+.os-art .hint { position: absolute; left: 8px; bottom: 6px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: .68rem; background: #000; color: var(--yellow); padding: 2px 6px; pointer-events: none; }

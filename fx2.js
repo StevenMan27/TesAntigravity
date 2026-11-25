@@ -11,7 +11,6 @@
     const sec = $('#' + id); if (!sec) return;
     const n = document.createElement('div'); n.className = 'sec-num'; n.textContent = '0' + (i + 1);
     sec.prepend(n);
-    gsap.fromTo(n, { y: -60 }, { y: 120, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 
   /* Manifesto: words fill in on scroll */
@@ -27,19 +26,6 @@
     ScrollTrigger.create({
       trigger: mt, start: 'top 80%', end: 'bottom 45%', scrub: true,
       onUpdate: self => spans.forEach((s, i) => s.classList.toggle('on', self.progress * 1.05 > i / spans.length))
-    });
-  }
-
-  /* Outline marquee, opposite direction, speeds up with scroll */
-  const t2 = $('#m2');
-  if (t2) {
-    let x = 0, last = scrollY;
-    gsap.ticker.add(() => {
-      const v = scrollY - last; last = scrollY;
-      const half = t2.scrollWidth / 2;
-      x += 1.6 + Math.min(Math.abs(v), 60) * .5;
-      if (x >= half) x -= half;
-      t2.style.transform = `translateX(${-half + x}px)`;
     });
   }
 
