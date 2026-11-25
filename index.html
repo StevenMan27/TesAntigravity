@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Christian Steven Manurung — CHMANRU.DEV Portfolio</title>
+  <meta name="description" content="Portofolio Christian Steven Manurung (CHMANRU), mahasiswa D-IV TRPL Institut Teknologi Del.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#top" class="logo">[CHMANRU.DEV]</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme" role="group" aria-label="Theme accent">
+        <button data-accent="#3B82F6" class="on" style="background:#3B82F6" aria-label="Electric Blue" title="Electric Blue"></button>
+        <button data-accent="#FFE600" style="background:#FFE600" aria-label="Cyber Yellow" title="Cyber Yellow"></button>
+        <button data-accent="#4ADE80" style="background:#4ADE80" aria-label="Acid Green" title="Acid Green"></button>
+      </div>
+      <a href="#contact" class="btn btn-sm nav-cta">HIRE / COLLAB ↗</a>
+      <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="overlay" id="overlay"></div>
+<nav class="drawer" id="drawer" aria-label="Menu mobile">
+  <button class="modal-x" id="drawerClose" style="align-self:flex-end">[X]</button>
+  <a class="dl" href="#about">About</a>
+  <a class="dl" href="#skills">Skills</a>
+  <a class="dl" href="#projects">Projects</a>
+  <a class="dl" href="#experience">Experience</a>
+  <a class="dl" href="#research">Research</a>
+  <a class="dl" href="#contact">Contact</a>
+  <a class="btn btn-white" href="#contact">HIRE / COLLAB ↗</a>
+  <div class="theme" style="display:flex" id="drawerTheme">
+    <button data-accent="#3B82F6" style="background:#3B82F6" aria-label="Electric Blue"></button>
+    <button data-accent="#FFE600" style="background:#FFE600" aria-label="Cyber Yellow"></button>
+    <button data-accent="#4ADE80" style="background:#4ADE80" aria-label="Acid Green"></button>
+  </div>
+</nav>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="status mono"><span class="dot">●</span> AVAILABLE FOR INTERNSHIP &amp; COLLABORATION 2026/2027</div>
+      <h1>
+        <span class="hl hl-y">SOFTWARE ENGINEER</span> IN THE MAKING. BUILDING
+        <span class="hl">RAW, FUNCTIONAL</span> &amp; SCALABLE DIGITAL SYSTEMS.
+      </h1>
+      <p class="lead">Mahasiswa D-IV TRPL di Institut Teknologi Del yang berfokus pada Full-Stack Web, Rekayasa Perangkat Lunak berorientasi objek, Administrasi Server Linux, dan Desain UI/UX modern.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-blue">EXPLORE MY WORKS ↓</a>
+        <a href="#" class="btn btn-white" id="cvBtn">DOWNLOAD CV</a>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:relative">
+      <div class="sticker">NIM: 41425031 // IT DEL</div>
+      <div class="os-window">
+        <div class="os-bar"><span>profile_chmanru.exe</span><span class="os-ctl"><i></i><i></i><i></i></span></div>
+        <div class="os-body">
+          <div class="os-art">
+            <svg viewBox="0 0 400 220" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Ilustrasi laptop dengan kode">
+              <rect x="80" y="30" width="240" height="140" fill="#fff"/>
+              <rect x="94" y="44" width="212" height="112" fill="#000"/>
+              <path d="M110 70l-14 14 14 14M290 70l14 14-14 14" stroke="#FFE600"/>
+              <path d="M215 64l-30 40" stroke="#4ADE80"/>
+              <path d="M110 125h60M110 140h100" stroke="#fff"/>
+              <path d="M50 170h300l-20 24H70z" fill="#FF5E5E"/>
+              <circle cx="40" cy="50" r="14" fill="#3B82F6"/>
+              <rect x="338" y="40" width="30" height="30" fill="#C084FC" transform="rotate(12 353 55)"/>
+              <path d="M345 120l12 20-24 0z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>6+</b><span>Tech Stacks</span></div>
+            <div class="stat"><b>5+</b><span>Projects</span></div>
+            <div class="stat"><b>Sem 3</b><span>TRPL IT Del</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>FULL-STACK WEB DEVELOPMENT ★ JAVA OOP &amp; JAVAFX ★ POSTGRESQL &amp; MYSQL ★ LINUX SERVER ADMIN ★ UI/UX PROTOTYPING ★</span>
+    <span>FULL-STACK WEB DEVELOPMENT ★ JAVA OOP &amp; JAVAFX ★ POSTGRESQL &amp; MYSQL ★ LINUX SERVER ADMIN ★ UI/UX PROTOTYPING ★</span>
+    <span>FULL-STACK WEB DEVELOPMENT ★ JAVA OOP &amp; JAVAFX ★ POSTGRESQL &amp; MYSQL ★ LINUX SERVER ADMIN ★ UI/UX PROTOTYPING ★</span>
+    <span>FULL-STACK WEB DEVELOPMENT ★ JAVA OOP &amp; JAVAFX ★ POSTGRESQL &amp; MYSQL ★ LINUX SERVER ADMIN ★ UI/UX PROTOTYPING ★</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">01 // ABOUT</span><h2>Tentang <span class="hl">Saya</span></h2></div>
+    <div class="bento">
+      <article class="card b-story reveal">
+        <h3>Christian Steven Manurung</h3>
+        <p>Mahasiswa D-IV TRPL di Institut Teknologi Del yang berfokus pada pengembangan Full-Stack Web, Rekayasa Perangkat Lunak berorientasi objek, Administrasi Server Linux, dan Desain UI/UX modern.</p>
+        <p>Terbiasa membangun sistem dari perancangan arsitektur database hingga antarmuka pengguna yang responsif.</p>
+        <p style="margin-top:16px">
+          <span class="tag">Brand: CHMANRU</span><span class="tag">Domisili: Kab. Toba / Tebing Tinggi, Sumut</span><span class="tag">NIM 41425031</span><span class="tag">Angkatan 2025</span>
+        </p>
+        <p class="mono" style="font-size:.85rem">portofoliochmanru.my.id | stevenm.my.id</p>
+      </article>
+      <aside class="card b-env reveal">
+        <h3>Dev Environment</h3>
+        <ul class="env-list">
+          <li>💻 Lenovo Legion 5</li>
+          <li>⚙ Intel i7-13650HX</li>
+          <li>🎮 NVIDIA RTX 4060</li>
+          <li>🪟 Windows + 🐧 Linux VM</li>
+        </ul>
+      </aside>
+      <article class="card b-time reveal" id="experience">
+        <h3>Academic Journey &amp; Programs</h3>
+        <div class="timeline">
+          <div class="t-item"><span class="t-date">2025 — SEKARANG</span><h4>Institut Teknologi Del</h4><p>D-IV Teknologi Rekayasa Perangkat Lunak (TRPL), Angkatan 2025.</p></div>
+          <div class="t-item"><span class="t-date">2026</span><h4>Coding Camp 2026</h4><p>Powered by DBS Foundation 2.0 — Dicoding Full-Stack Web Developer Track.</p></div>
+          <div class="t-item"><span class="t-date">2026</span><h4>Seleksi GSA 2026</h4><p>Seleksi Google Student Ambassador (GSA) 2026.</p></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">02 // SKILLS</span><h2>Tech Stack <span class="hl hl-y">Matrix</span></h2></div>
+    <div class="filters" id="skillFilters">
+      <button class="filter on" data-f="all">[ALL]</button>
+      <button class="filter" data-f="lang">[LANGUAGES]</button>
+      <button class="filter" data-f="web">[FRAMEWORKS &amp; WEB]</button>
+      <button class="filter" data-f="db">[DATABASE &amp; SERVER]</button>
+      <button class="filter" data-f="tools">[TOOLS &amp; DESIGN]</button>
+    </div>
+    <div class="skill-grid" id="skillGrid"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">03 // PROJECTS</span><h2>Featured <span class="hl">Projects</span></h2></div>
+    <div class="filters" id="projFilters">
+      <button class="filter on" data-f="all">[ALL]</button>
+      <button class="filter" data-f="web">[WEB APP]</button>
+      <button class="filter" data-f="uiux">[UI/UX]</button>
+      <button class="filter" data-f="db">[DATABASE]</button>
+      <button class="filter" data-f="infra">[INFRASTRUCTURE]</button>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">04 // RESEARCH</span><h2>Academic <span class="hl hl-y">Research</span></h2></div>
+    <div class="research reveal">
+      <div>
+        <span class="badge">TARGET: SINTA 4/5</span><span class="badge" style="background:var(--coral)">DALAM PENYUSUNAN</span>
+        <h3>"The Effect of AI on College Students' Ability to Remember"</h3>
+        <p>Karya tulis ilmiah yang sedang disusun bersama tim peneliti TRPL IT Del untuk target publikasi jurnal Sinta 4/5.</p>
+        <p style="margin-top:20px"><button class="btn btn-white" id="abstractBtn" aria-expanded="false">READ ABSTRACT</button></p>
+      </div>
+      <div class="panel mono" style="font-size:.85rem;font-weight:700">
+        <p>TOPIK: AI × Memori mahasiswa</p><br>
+        <p>TIM: TRPL IT Del</p><br>
+        <p>STATUS: Sedang disusun</p>
+      </div>
+      <div class="abstract" id="abstract" style="grid-column:1/-1">
+        <h4>ABSTRAK RINGKAS</h4>
+        <p>Penelitian ini mengkaji pengaruh penggunaan kecerdasan buatan (AI) terhadap kemampuan mahasiswa dalam mengingat. Naskah masih dalam tahap penyusunan.</p>
+        <h4>METODOLOGI</h4>
+        <p class="mono" style="font-size:.85rem">[TO BE FILLED — metodologi akan ditambahkan setelah naskah final.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">05 // FAQ</span><h2>How I <span class="hl">Work</span></h2></div>
+    <div class="faq" id="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false"><span>Apakah kamu tersedia untuk proyek atau magang?</span><span class="pm">+</span></button>
+        <div class="faq-a"><p>Ya. Saya terbuka untuk magang dan kolaborasi periode 2026/2027. Hubungi saya lewat email if425031@del.ac.id atau WhatsApp 082162479889.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false"><span>Teknologi apa yang kamu kuasai?</span><span class="pm">+</span></button>
+        <div class="faq-a"><p>Java (OOP, JavaFX, JUnit 5), C, C++, PHP, JavaScript, Python, SQL, Laravel, React, Vite, Node.js, PostgreSQL, MySQL, administrasi server Linux, serta Figma untuk UI/UX.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false"><span>Bagaimana alur kerja pengembanganmu?</span><span class="pm">+</span></button>
+        <div class="faq-a"><p>Saya terbiasa membangun sistem dari perancangan arsitektur database hingga antarmuka pengguna yang responsif.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false"><span>Bisa bekerja dalam tim?</span><span class="pm">+</span></button>
+        <div class="faq-a"><p>Bisa. Saya terbuka untuk kolaborasi, dan saat ini juga menyusun riset bersama tim peneliti TRPL IT Del.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-head reveal"><span class="sec-tag">06 // CONTACT</span><h2>Let's <span class="hl hl-y">Build</span> Together</h2></div>
+    <div class="contact-grid">
+      <div class="card contact-card reveal">
+        <h3 style="font-size:1.8rem">Kontak Langsung</h3>
+        <ul class="contact-list">
+          <li>✉ if425031@del.ac.id</li>
+          <li><a href="https://wa.me/6282162479889" target="_blank" rel="noopener">☎ 082162479889 (WhatsApp)</a></li>
+          <li><a href="https://github.com/christiansteven" target="_blank" rel="noopener">⌥ github.com/christiansteven</a></li>
+        </ul>
+        <button class="btn btn-white" id="copyEmail">COPY EMAIL</button>
+      </div>
+      <div class="card reveal">
+        <form id="contactForm" novalidate>
+          <div class="field"><label for="name">Nama</label><input id="name" name="name" type="text" autocomplete="name"><span class="field-err">NAMA MINIMAL 2 KARAKTER</span></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"><span class="field-err">EMAIL TIDAK VALID</span></div>
+          <div class="field"><label for="message">Pesan</label><textarea id="message" name="message"></textarea><span class="field-err">PESAN MINIMAL 10 KARAKTER</span></div>
+          <button type="submit" class="btn btn-blue">KIRIM PESAN ↗</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <h3>CHMANRU.DEV</h3>
+      <div>
+        <a href="https://github.com/christiansteven" target="_blank" rel="noopener">GITHUB</a>
+        <a href="mailto:if425031@del.ac.id">EMAIL</a>
+        <a href="#top">BACK TO TOP ↑</a>
+      </div>
+    </div>
+    <p class="copy">© 2026 CHRISTIAN STEVEN MANURUNG (41425031)</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal-box">
+    <div class="modal-bar"><span>case_study.exe</span><button class="modal-x" id="modalClose" aria-label="Tutup">[X]</button></div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
