@@ -10,7 +10,7 @@ Portofolio personal bergaya **Neo-Brutalism** (HTML5, CSS3, Vanilla JS).
 - Theme accent switcher, scroll reveal, mobile drawer
 
 ## Struktur
-- `index.html`, `style.css`, `script.js`
+- `index.html`, `style.css`, `script.js`, `fx.js` (GSAP + Lenis + Three.js via CDN, tanpa build)
 
 ## Jalankan lokal
 Buka `index.html` di browser.
