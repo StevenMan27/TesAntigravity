@@ -254,8 +254,8 @@
   function onScroll() {
     const h = document.documentElement.scrollHeight - innerHeight;
     prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
-    let cur = -1;
-    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.4) cur = i; });
+    let cur = -1, best = -1e9;
+    secs.forEach((s, i) => { if (!s) return; const t = s.getBoundingClientRect().top; if (t < innerHeight * 0.4 && t > best) { best = t; cur = i; } });
     links.forEach((a, i) => a.classList.toggle('active', i === cur));
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();

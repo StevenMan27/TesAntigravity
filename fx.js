@@ -70,7 +70,6 @@
   gsap.utils.toArray('.t-item').forEach((el, i) => gsap.from(el, { y: 60, rotate: i % 2 ? 3 : -3, opacity: 0, duration: .7, delay: i * .1, ease: 'back.out(1.4)', scrollTrigger: { trigger: el, start: 'top 90%' } }));
   gsap.to('.sticker', { y: -30, rotate: -10, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.os-window', { y: -50, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.utils.toArray('.proj-vis svg').forEach(svg => gsap.fromTo(svg, { y: -18, scale: 1.12 }, { y: 18, ease: 'none', scrollTrigger: { trigger: svg, start: 'top bottom', end: 'bottom top', scrub: true } }));
   gsap.to('.footer-big, footer h3', { x: 60, ease: 'none', scrollTrigger: { trigger: 'footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
 
   /* ---------- Marquee reacts to scroll velocity ---------- */
@@ -108,52 +107,4 @@
     });
   }
 
-  /* ---------- Hero 3D (Three.js) ---------- */
-  const canvas = $('#hero3d');
-  if (canvas && typeof THREE !== 'undefined') {
-    let renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch { return; }
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, 1, .1, 100); camera.position.z = 12;
-    const colors = [0xFFE600, 0x3B82F6, 0xFF5E5E, 0x4ADE80, 0xC084FC];
-    const geos = [new THREE.BoxGeometry(1.4, 1.4, 1.4), new THREE.OctahedronGeometry(1), new THREE.TorusGeometry(.8, .3, 8, 16), new THREE.IcosahedronGeometry(.9), new THREE.ConeGeometry(.9, 1.6, 4), new THREE.BoxGeometry(2, .5, .5)];
-    const group = new THREE.Group(); scene.add(group);
-    const meshes = [];
-    const small = innerWidth < 720;
-    const count = small ? 5 : 9;
-    for (let i = 0; i < count; i++) {
-      const g = geos[i % geos.length];
-      const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: colors[i % colors.length] }));
-      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({ color: 0x000000 }));
-      m.add(edges);
-      const a = (i / count) * Math.PI * 2;
-      m.position.set(Math.cos(a) * 6 + 1, Math.sin(a) * 3.2, (Math.random() - .5) * 4 - 2);
-      m.userData = { s: .004 + Math.random() * .01, p: Math.random() * 6, y0: m.position.y };
-      m.scale.setScalar(small ? .7 : 1);
-      group.add(m); meshes.push(m);
-    }
-    const mouse = { x: 0, y: 0 };
-    addEventListener('mousemove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; }, { passive: true });
-    function resize() {
-      const r = canvas.parentElement.getBoundingClientRect();
-      renderer.setSize(r.width, r.height, false);
-      camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
-    }
-    resize(); addEventListener('resize', resize);
-    let visible = true;
-    new IntersectionObserver(es => visible = es[0].isIntersecting).observe(canvas.parentElement);
-    gsap.from(group.scale, { x: 0, y: 0, z: 0, duration: 1.4, delay: 1.6, ease: 'elastic.out(1,.6)' });
-    gsap.ticker.add(t => {
-      if (!visible) return;
-      meshes.forEach(m => {
-        m.rotation.x += m.userData.s; m.rotation.y += m.userData.s * 1.4;
-        m.position.y = m.userData.y0 + Math.sin(t + m.userData.p) * .35;
-      });
-      group.rotation.y += (mouse.x * .8 - group.rotation.y) * .05;
-      group.rotation.x += (mouse.y * .5 - group.rotation.x) * .05;
-      group.position.y = scrollY * .004;
-      renderer.render(scene, camera);
-    });
-  }
 })();
