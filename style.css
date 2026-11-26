@@ -443,3 +443,6 @@ html { scrollbar-color: #000 var(--yellow); }
 
 @media (max-width: 720px) { .term-body { height: 260px; font-size: .8rem; } .typer { font-size: .78rem; } .to-top { width: 48px; height: 48px; right: 12px; bottom: 12px; } }
 #termForm label { text-transform: none; font-size: .88rem; }
+
+/* hide native cursor only while the square cursor is active (mouse devices) */
+html.has-cursor, html.has-cursor * { cursor: none !important; }

@@ -49,7 +49,8 @@
   if (cur && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const txt = $('#cursorTxt');
     const cx = gsap.quickTo(cur, 'x', { duration: .2, ease: 'power3' }), cy = gsap.quickTo(cur, 'y', { duration: .2, ease: 'power3' });
-    addEventListener('mousemove', e => { cur.classList.add('on'); cx(e.clientX); cy(e.clientY); }, { passive: true });
+    addEventListener('mousemove', e => { document.documentElement.classList.add('has-cursor'); cur.classList.add('on'); cx(e.clientX); cy(e.clientY); }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', () => cur.classList.remove('on'));
     document.addEventListener('mouseover', e => {
       const p = !!e.target.closest('.proj'), t = e.target.closest('a, button, input, textarea');
       cur.classList.toggle('big', p); txt.textContent = p ? 'VIEW' : '';
